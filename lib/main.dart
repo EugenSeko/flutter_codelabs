@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -121,6 +121,41 @@ class GeneratorPage extends StatelessWidget {
   }
 }
 
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    final theme = Theme.of(context);
+    final headTextStyle = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.primary,
+    );
+    final textStyle = theme.textTheme.displaySmall!.copyWith(
+      color: theme.colorScheme.outline,
+    );
+
+    var favorites = appState.favorites.map((e) => ListTile(
+          title: Text(
+            e.asLowerCase,
+            style: textStyle,
+            textAlign: TextAlign.center,
+          ),
+          onTap: () => appState.removeFavorite(e),
+        ));
+
+    return ListView(
+      children: [
+        Text(
+          'Favorites',
+          style: headTextStyle,
+          textAlign: TextAlign.center,
+        ),
+        for (var t in favorites) t,
+      ],
+    );
+  }
+}
+
 class BigCard extends StatelessWidget {
   const BigCard({
     super.key,
@@ -167,6 +202,11 @@ class MyAppState extends ChangeNotifier {
     } else {
       favorites.add(current);
     }
+    notifyListeners();
+  }
+
+  void removeFavorite(WordPair pair) {
+    favorites.remove(pair);
     notifyListeners();
   }
 }
