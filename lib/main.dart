@@ -18,10 +18,30 @@ class HorizonApp extends StatelessWidget {
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              title: const Text('Horizons'),
               backgroundColor: Colors.teal[800],
               pinned: true,
               expandedHeight: 200,
+              flexibleSpace: FlexibleSpaceBar(
+                title: const Text('Horizons'),
+                collapseMode: CollapseMode.parallax,
+                background: DecoratedBox(
+                  position: DecorationPosition.foreground,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.center,
+                      colors: <Color>[
+                        Colors.teal[800]!,
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                  child: Image.network(
+                    headerImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               // snap: true,
               // floating: true,
             ),
