@@ -19,10 +19,22 @@ class HorizonApp extends StatelessWidget {
           slivers: <Widget>[
             SliverAppBar(
               backgroundColor: Colors.teal[800],
-              pinned: true,
+              //pinned: true,
+              //snap: true,
+              //floating: true,
+              stretch: true,
+              onStretchTrigger: () async {
+                print('Load new data!');
+                //await Server.requestNewData();
+              },
               expandedHeight: 200,
               flexibleSpace: FlexibleSpaceBar(
                 title: const Text('Horizons'),
+                stretchModes: const <StretchMode>[
+                  // StretchMode.zoomBackground,
+                  //StretchMode.fadeTitle,
+                  StretchMode.blurBackground,
+                ],
                 collapseMode: CollapseMode.parallax,
                 background: DecoratedBox(
                   position: DecorationPosition.foreground,
@@ -42,8 +54,6 @@ class HorizonApp extends StatelessWidget {
                   ),
                 ),
               ),
-              // snap: true,
-              // floating: true,
             ),
             const WeeklyForecastList(),
           ],
