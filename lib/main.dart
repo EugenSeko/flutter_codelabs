@@ -39,23 +39,83 @@ class WeeklyForecastList extends StatelessWidget {
           final DailyForecast dailyForecast =
               Server.getDailyForecastByID(index);
 
-          return Card(
-            child: ListTile(
-              leading: Text(
-                dailyForecast.getDate(currentDate.day).toString(),
-                style: textTheme.headline4,
-              ),
-              title: Text(
-                dailyForecast.getWeekday(currentDate.weekday),
-                style: textTheme.headline5,
-              ),
-              subtitle: Text(dailyForecast.description),
-              trailing: Text(
-                '${dailyForecast.highTemp} | ${dailyForecast.lowTemp} F',
-                style: textTheme.subtitle2,
-              ),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: <Widget>[
+                      DecoratedBox(
+                        position: DecorationPosition.foreground,
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: <Color>[
+                              Colors.grey[800]!,
+                              Colors.transparent,
+                            ],
+                          ),
+                        ),
+                        child: Image.network(
+                          dailyForecast.imageId,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          dailyForecast.getDate(currentDate.day).toString(),
+                          style: textTheme.headline4,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 18),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          dailyForecast.getWeekday(currentDate.weekday),
+                          style: textTheme.headline5,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(dailyForecast.description),
+                      ],
+                    ),
+                  ),
+                ),
+                Text(
+                  '${dailyForecast.highTemp} | ${dailyForecast.lowTemp} F',
+                  style: textTheme.subtitle2,
+                ),
+              ],
             ),
           );
+
+          //   return Card(
+          //     child: ListTile(
+          //       leading: Text(
+          //         dailyForecast.getDate(currentDate.day).toString(),
+          //         style: textTheme.headline4,
+          //       ),
+          //       title: Text(
+          //         dailyForecast.getWeekday(currentDate.weekday),
+          //         style: textTheme.headline5,
+          //       ),
+          //       subtitle: Text(dailyForecast.description),
+          //       trailing: Text(
+          //         '${dailyForecast.highTemp} | ${dailyForecast.lowTemp} F',
+          //         style: textTheme.subtitle2,
+          //       ),
+          //     ),
+          //   );
         });
   }
 }
